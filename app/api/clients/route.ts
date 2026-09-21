@@ -3,7 +3,7 @@ import {NextResponse} from "next/server";
 
 
 export async function GET() {
-    const count: number = 10
+    const count: number = 1000
     const clients = []
 
     for (let i = 0; i < count; i++) {
