@@ -3,7 +3,6 @@
 import {useEffect, useRef, useState} from "react";
 import {Client} from "@/app/types/client";
 
-// import {useInView} from "react-intersection-observer";
 
 interface ApiResponse {
     data: Client[];
@@ -43,7 +42,11 @@ export default function ClientTable() {
             const data: ApiResponse = await res.json()
 
             //при первой загрузке очищаем список, иначе подгружаем
+            // if (filters.name || filters.minAge || filters.maxAge) {
+            //
+            // }
             setClients((prev) => (currentPage === 1 ? data.data : [...prev, ...data.data]))
+            // setClients((prev) => (currentPage === 1 ? data.data : [...prev, ...data.data]))
 
             // const res = await fetch(`/api/clients?page=${currentPage}&limit=10`)
             // const data: ApiResponse = await res.json()
@@ -66,19 +69,19 @@ export default function ClientTable() {
     //загрузка при изменении фильтров или страницы
     useEffect(() => {
         //возвращаем на первую страницу
-        if (currentPage !== 1) {
-            setCurrentPage(1)
-            return
-        }
+        // if (currentPage !== 1) {
+        //     setCurrentPage(1)
+        //     return
+        // }
         fetchClients()
-    }, [filters, currentPage])
+    }, [currentPage])
 
+    useEffect(() => {
+        //возвращаем на первую страницу
+        setCurrentPage(1)
+        fetchClients()
+    }, [filters])
 
-    // useEffect(() => {
-    //     if (clients.length === 0) {
-    //         fetchClients()
-    //     }
-    // }, [])
 
     //observer для бесконечного скролла
     useEffect(() => {
@@ -102,29 +105,9 @@ export default function ClientTable() {
         }
     }, [hasMoreData, loading])
 
-    // useEffect(() => {
-    //     if (currentPage > 1) {
-    //         fetchClients()
-    //     }
-    // }, [currentPage])
-
     if (loading && clients.length === 0) {
         return <div className="p-8 text-center text-gray-500">Loading clients</div>
     }
-
-    // const itemsPerPage = 10
-
-    // const handleReset = () => {
-    //     setNameFilter("")
-    //     setAgeFromFilter("")
-    //     setAgeToFilter("")
-    // }
-
-
-    // const totalPages = Math.ceil(clients.length / itemsPerPage)
-    // const startIdx = (currentPage - 1) * itemsPerPage
-    // const startIdx = currentPage - 1
-    // const currentClients = clients.slice(startIdx, startIdx + itemsPerPage)
 
 
     // только для клиента
@@ -139,12 +122,7 @@ export default function ClientTable() {
 
 
     return (
-        // <div
-        //     ref={ref}
-        //     style={{maxHeight: '700px', overflowY: 'auto'}}>
-        // <div className="p-6 max-w-7xl mx-auto">
-        // <div className="p-6 max-w-7xl mx-auto">
-            <div className="overflow-x-auto mt-6">
+        <div className="overflow-x-auto mt-6">
             <div className="mt-6">
                 <div className="flex flex-col md:flex-row gap-4 mb-6 p-4 bg-gray-50 rounded">
                     <input
@@ -217,18 +195,6 @@ export default function ClientTable() {
                 {!hasMoreData && !loading && (
                     <div>All clients are loaded.</div>
                 )}
-                {/*<div>*/}
-                {/*<span>Page {currentPage} of {totalPages}</span>*/}
-                {/*<button onClick={() => setCurrentPage((page) => Math.max(page - 1, 1))}*/}
-                {/*        disabled={currentPage === 1}*/}
-                {/*        className="bg-black/50 text-white px-4 py-2 rounded">Back*/}
-                {/*</button>*/}
-                {/*<button*/}
-                {/*    onClick={() => setCurrentPage((page) => Math.min(page + 1, totalPages))}*/}
-                {/*    disabled={currentPage === totalPages}*/}
-                {/*    className="bg-black/50 text-white px-4 py-2 rounded">Next*/}
-                {/*</button>*/}
-                {/*</div>*/}
             </div>
         </div>
     )

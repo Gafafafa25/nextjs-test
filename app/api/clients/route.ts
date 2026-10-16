@@ -19,7 +19,7 @@ export async function GET(request: Request) {
 
     const startIndex = (page - 1) * limit
 
-    const count: number = 1000
+    // const count: number = 1000
     const clients = []
 
     // for (let i = 0; i < count; i++) {
@@ -37,6 +37,7 @@ export async function GET(request: Request) {
     }
 
     //фильтрация по имени
+
     let filteredClients = clients.filter((client) =>
         client.firstName.toLowerCase().includes(nameQuery))
 
@@ -45,7 +46,8 @@ export async function GET(request: Request) {
     client.age >= minAge && client.age <= maxAge)
 
     //пагинация на отфильтрованном массиве
-    const paginatedClients = filteredClients.slice(startIndex, startIndex + limit)
+    const paginatedClients = filteredClients
+    // const paginatedClients = filteredClients.slice(startIndex, startIndex + limit)
 
     // return NextResponse.json(clients)
     return NextResponse.json({
@@ -54,10 +56,4 @@ export async function GET(request: Request) {
         limit,
         total: filteredClients.length
     })
-    // return NextResponse.json({
-    //     data: clients,
-    //     page,
-    //     limit,
-    //     total: count
-    // })
 }
