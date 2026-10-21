@@ -65,20 +65,11 @@ export default function ClientTable() {
 
     //загрузка при изменении фильтров или страницы
     useEffect(() => {
-        //возвращаем на первую страницу
-        if (currentPage !== 1) {
-            setCurrentPage(1)
-            return
-        }
         fetchClients()
     }, [filters, currentPage])
 
 
-    // useEffect(() => {
-    //     if (clients.length === 0) {
-    //         fetchClients()
-    //     }
-    // }, [])
+
 
     //observer для бесконечного скролла
     useEffect(() => {

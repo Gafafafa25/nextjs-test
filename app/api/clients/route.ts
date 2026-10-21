@@ -1,5 +1,5 @@
-import {faker} from "@faker-js/faker";
 import {NextResponse} from "next/server";
+import allClients from "@/data/clients.json"
 
 
 export async function GET(request: Request) {
@@ -20,25 +20,12 @@ export async function GET(request: Request) {
     const startIndex = (page - 1) * limit
 
     const count: number = 1000
-    const clients = []
-
-    // for (let i = 0; i < count; i++) {
-    for (let i = 0; i < limit; i++) {
-        const client = {
-            id: startIndex + i + 1,
-            firstName: faker.person.firstName(),
-            lastName: faker.person.lastName(),
-            city: faker.location.city(),
-            job: faker.person.jobTitle(),
-            age: faker.number.int({min: minAge, max: maxAge})
-            // age: faker.number.int({min: 18, max: 80})
-        }
-        clients.push(client)
-    }
+    const clients = allClients
 
     //фильтрация по имени
+
     let filteredClients = clients.filter((client) =>
-        client.firstName.toLowerCase().includes(nameQuery))
+        client.firstName.toLowerCase().startsWith(nameQuery))
 
     //фильтрация по возрасту
     filteredClients = clients.filter((client) =>
@@ -47,17 +34,10 @@ export async function GET(request: Request) {
     //пагинация на отфильтрованном массиве
     const paginatedClients = filteredClients.slice(startIndex, startIndex + limit)
 
-    // return NextResponse.json(clients)
     return NextResponse.json({
         data: paginatedClients,
         page,
         limit,
         total: filteredClients.length
     })
-    // return NextResponse.json({
-    //     data: clients,
-    //     page,
-    //     limit,
-    //     total: count
-    // })
 }
