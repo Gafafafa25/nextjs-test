@@ -142,22 +142,31 @@ export default function ClientTable() {
                         type="text"
                         placeholder="Name"
                         value={filters.name}
-                        onChange={(e) =>
-                            setFilters({...filters, name: e.target.value})}
+                        onChange={(e) => {
+                            setFilters({...filters, name: e.target.value})
+                            setCurrentPage(1)
+                        }
+                    }
                     />
                     <input
                         type="number"
                         placeholder="Age from"
                         value={filters.minAge}
-                        onChange={(e) =>
-                            setFilters({...filters, minAge: e.target.value})}
+                        onChange={(e) => {
+                            setFilters({...filters, minAge: e.target.value})
+                            setCurrentPage(1)
+                        }
+                    }
                     />
                     <input
                         type="number"
                         placeholder="Age to"
                         value={filters.maxAge}
-                        onChange={(e) =>
-                            setFilters({...filters, maxAge: e.target.value})}
+                        onChange={(e) => {
+                            setFilters({...filters, maxAge: e.target.value})
+                            setCurrentPage(1)
+                        }
+                    }
                     />
                     {/*//todo: handleReset*/}
                     <button

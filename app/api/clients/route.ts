@@ -27,8 +27,11 @@ export async function GET(request: Request) {
     let filteredClients = clients.filter((client) =>
         client.firstName.toLowerCase().startsWith(nameQuery))
 
+    console.log(filteredClients, " filteredClients")
+    console.log(nameQuery, " name query")
+
     //фильтрация по возрасту
-    filteredClients = clients.filter((client) =>
+    filteredClients = filteredClients.filter((client) =>
     client.age >= minAge && client.age <= maxAge)
 
     //пагинация на отфильтрованном массиве
