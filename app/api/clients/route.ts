@@ -24,24 +24,9 @@ export async function GET(request: Request) {
 
     //regEx
     let filteredClients = clients
-    if (nameQuery || phoneQuery ) {
-        // const regexName = new RegExp(nameQuery, 'i')
-        console.log(nameQuery, " nameQu")
+    if (phoneQuery) {
         const q = phoneQuery.trim().replaceAll("#", "\\d").replaceAll("+", "\\+").replaceAll("*", ".*")
-        const q1 = nameQuery.trim().replaceAll("#", "\\w").replaceAll("*", ".*")
-        console.log(q1, " 1")
-        const regexName = new RegExp("^" + q1 + "$", 'i')
         const regexPhone = new RegExp("^" + q + "$", 'i')
-
-        // console.log(regexPhone, "regexPhone")
-
-        //фильтрация по имени
-         filteredClients = clients.filter((client) => {
-                const value = client.firstName
-             // console.log(value, " val")
-                return regexName.test(value)
-            }
-        )
 
         //фильтрация по номеру телефона
         filteredClients = filteredClients.filter((client) => {
@@ -49,9 +34,17 @@ export async function GET(request: Request) {
             return regexPhone.test(value)
         })
     }
+    if (nameQuery) {
+        const q1 = nameQuery.trim().replaceAll("#", "\\w").replaceAll("*", ".*")
+        const regexName = new RegExp("^" + q1 + "$", 'i')
 
-    // console.log(filteredClients, " filteredClients")
-    // console.log(nameQuery, " name query")
+        //фильтрация по имени
+        filteredClients = filteredClients.filter((client) => {
+                const value = client.firstName
+                return regexName.test(value)
+            }
+        )
+    }
 
     //фильтрация по возрасту
     filteredClients = filteredClients.filter((client) =>
