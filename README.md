@@ -43,3 +43,6 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/bui
 npm install react-intersection-observer
 ```
 
+```bash
+git switch -c mask-filters
+```

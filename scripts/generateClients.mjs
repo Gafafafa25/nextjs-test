@@ -12,7 +12,8 @@ if (!fs.existsSync(file)) {
             lastName: faker.person.lastName(),
             city: faker.location.city(),
             job: faker.person.jobTitle(),
-            age: faker.number.int({min: 18, max: 100})
+            age: faker.number.int({min: 18, max: 100}),
+            phone: faker.phone.number()
         }
         clients.push(client)
     }

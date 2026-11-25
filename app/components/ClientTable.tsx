@@ -22,7 +22,8 @@ export default function ClientTable() {
     const [filters, setFilters] = useState({
         name: '',
         minAge: '',
-        maxAge: ''
+        maxAge: '',
+        phone: ''
     })
 
     const observerElementRef = useRef<HTMLDivElement>(null);
@@ -38,6 +39,7 @@ export default function ClientTable() {
             if (filters.name) url.searchParams.set('name', filters.name)
             if (filters.minAge) url.searchParams.set('minAge', filters.minAge)
             if (filters.maxAge) url.searchParams.set('maxAge', filters.maxAge)
+            if (filters.phone) url.searchParams.set('phone', filters.phone)
 
             const res = await fetch(url.toString())
             const data: ApiResponse = await res.json()
@@ -146,7 +148,7 @@ export default function ClientTable() {
                             setFilters({...filters, name: e.target.value})
                             setCurrentPage(1)
                         }
-                    }
+                        }
                     />
                     <input
                         type="number"
@@ -156,7 +158,7 @@ export default function ClientTable() {
                             setFilters({...filters, minAge: e.target.value})
                             setCurrentPage(1)
                         }
-                    }
+                        }
                     />
                     <input
                         type="number"
@@ -166,7 +168,17 @@ export default function ClientTable() {
                             setFilters({...filters, maxAge: e.target.value})
                             setCurrentPage(1)
                         }
-                    }
+                        }
+                    />
+                    <input
+                        type="text"
+                        placeholder="Phone"
+                        value={filters.phone}
+                        onChange={(e) => {
+                            setFilters({...filters, phone: e.target.value})
+                            setCurrentPage(1)
+                        }
+                        }
                     />
                     {/*//todo: handleReset*/}
                     <button
@@ -184,6 +196,7 @@ export default function ClientTable() {
                         <th>City</th>
                         <th>Job</th>
                         <th>Age</th>
+                        <th>Phone</th>
                     </tr>
                     </thead>
                     <tbody className="">
@@ -194,6 +207,7 @@ export default function ClientTable() {
                             <td>{client.city}</td>
                             <td>{client.job}</td>
                             <td>{client.age}</td>
+                            <td>{client.phone}</td>
                         </tr>
                     ))
                     }
